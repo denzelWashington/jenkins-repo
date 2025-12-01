@@ -56,12 +56,12 @@ public class UserController {
     // Mapping helpers
     private UserDto toDto(User user) {
         if (user == null) return null;
-        return new UserDto(null, user.username(), user.email());
+        return new UserDto(null, user.username(), user.email().orElse(null));
     }
 
     @SuppressWarnings("unused")
     private User toEntity(UserDto dto) {
         if (dto == null) return null;
-        return new User(dto.id(), dto.username(), null);
+        return new User(dto.id(), dto.username(), dto.email());
     }
 }
