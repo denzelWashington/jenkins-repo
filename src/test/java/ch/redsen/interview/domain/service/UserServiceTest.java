@@ -40,13 +40,13 @@ public class UserServiceTest {
     }, nullValues = "<null>")
     void shouldAlwaysGetUserEmail(Long id, String username, String email, String repoEmail, String expected) {
         // Given
-        User user = new User(id, username, email);
         boolean emailMissing = email == null || email.isBlank();
+        when(userRepository.findById(id)).thenReturn(Optional.of(new User(id, username, email)));
         if (emailMissing) {
             when(emailRepository.getUserEmail(id)).thenReturn(Optional.ofNullable(repoEmail));
         }
         // When
-        String actual = userService.getUserEmail(user);
+        String actual = userService.getUserEmail(id);
         // Then
         assertEquals(expected, actual);
         if (emailMissing) {

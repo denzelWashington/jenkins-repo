@@ -56,7 +56,7 @@ public class UserController {
     // Mapping helpers
     private UserDto toDto(User user) {
         if (user == null) return null;
-        return new UserDto(null, user.username(), user.email().orElse(null));
+        return new UserDto(null, user.username(), user.email());
     }
 
     @SuppressWarnings("unused")

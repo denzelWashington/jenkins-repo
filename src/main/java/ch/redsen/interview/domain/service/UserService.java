@@ -21,8 +21,8 @@ public class UserService {
     @Value("${fallback.user-email}")
     private String fallbackUserEmail;
 
-    public String getUserEmail(User user) {
-        throw new UnsupportedOperationException("Unimplemented method 'getUserEmail'");
+    public String getUserEmail(Long userId) {
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     public Optional<User> getUserById(Long id) {
