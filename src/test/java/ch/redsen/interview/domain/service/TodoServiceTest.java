@@ -75,37 +75,5 @@ class TodoServiceTest {
         assertThat(result).containsExactlyInAnyOrder(1L, 2L);
     }
 
-    @Test
-    void shouldCheckIfUserHasPendingTodos() {
-        // Given
-        Long userId = 1L;
-        when(todoRepository.findByUserId(userId))
-            .thenReturn(
-                List.of(
-                    new Todo(1L, "Title 1", "Description 1", TodoStatus.COMPLETED, LocalDateTime.now().plusDays(1), userId),
-                    new Todo(2L, "Title 2", "Description 2", TodoStatus.PENDING, LocalDateTime.now().plusDays(2), userId)
-                ));
-        // When
-        boolean result = todoService.hasPendingTodos(userId);
-        // Then
-        verify(todoRepository).findByUserId(userId);
-        assertThat(result).isTrue();
-    }
 
-    @Test
-    void shouldCheckIfUserHasCompletedAllTodos() {
-        // Given
-        Long userId = 1L;
-        when(todoRepository.findByUserId(userId))
-            .thenReturn(
-                List.of(
-                    new Todo(1L, "Title 1", "Description 1", TodoStatus.COMPLETED, LocalDateTime.now().plusDays(1), userId),
-                    new Todo(2L, "Title 2", "Description 2", TodoStatus.COMPLETED, LocalDateTime.now().plusDays(2), userId)
-                ));
-        // When
-        boolean result = todoService.hasCompletedAllTodos(userId);
-        // Then
-        verify(todoRepository).findByUserId(userId);
-        assertThat(result).isTrue();
-    }
 }

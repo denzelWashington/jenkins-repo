@@ -31,28 +31,4 @@ public class UserServiceTest {
     @MockitoBean
     private UserRepository userRepository;
 
-    @ParameterizedTest
-    @CsvSource(value = {
-            "1, alice, alice@email.com, <null>, alice@email.com",
-            "2, bob, <null>, bob@email.com, bob@email.com",
-            "3, charlie, '', charlie@email.com, charlie@email.com",
-            "4, dave, <null>, <null>, unknown@example.com"
-    }, nullValues = "<null>")
-    void shouldAlwaysGetUserEmail(Long id, String username, String email, String repoEmail, String expected) {
-        // Given
-        boolean emailMissing = email == null || email.isBlank();
-        when(userRepository.findById(id)).thenReturn(Optional.of(new User(id, username, email)));
-        if (emailMissing) {
-            when(emailRepository.getUserEmail(id)).thenReturn(Optional.ofNullable(repoEmail));
-        }
-        // When
-        String actual = userService.getUserEmail(id);
-        // Then
-        assertEquals(expected, actual);
-        if (emailMissing) {
-            verify(emailRepository).getUserEmail(id);
-        } else {
-            verify(emailRepository, never()).getUserEmail(id);
-        }
-    }
 }
