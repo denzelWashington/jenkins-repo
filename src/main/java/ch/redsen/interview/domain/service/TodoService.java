@@ -3,7 +3,9 @@ package ch.redsen.interview.domain.service;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import ch.redsen.interview.domain.model.TodoStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +18,21 @@ public class TodoService {
     TodoRepository todoRepository;
 
     public Map<Long, List<Todo>> getTodosGroupedByUser() {
-        throw new UnsupportedOperationException("Unimplemented method 'getTodosGroupedByUser'");
+        return todoRepository.findAll().stream().collect(Collectors
+                .groupingBy(Todo::userId));
     }
 
     public List<Long> getAllUserIdsWithPendingTodos() {
-        throw new UnsupportedOperationException("Unimplemented method 'getAllUserIdsWithPendingTodos'");
+       return todoRepository.findAll().stream()
+               .filter(user -> user.status().equals(TodoStatus.PENDING))
+               .map(Todo::userId).distinct().toList();
     }
 
     public boolean hasPendingTodos(Long userId) {
-        throw new UnsupportedOperationException("Unimplemented method 'hasPendingTodos'");
+       // return todoRepository.findByUserId(userId).stream()
+        //        .filter(user -> user.).count() > 0;
+        return todoRepository.findByUserId(userId)
+                .stream().anyMatch(user -> user.status().equals(TodoStatus.PENDING));
     }
 
     public boolean hasCompletedAllTodos(Long userId) {

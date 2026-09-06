@@ -39,7 +39,9 @@ public class UserController {
     @PostMapping
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
         User saved = userService.createUser(new User(null, userDto.username(), userDto.email()));
-        if (saved == null) { }
+        if (saved == null) {
+
+        }
         return ResponseEntity.status(201).body(userDto);
     }
 

@@ -22,7 +22,11 @@ public class UserService {
     private String fallbackUserEmail;
 
     public String getUserEmail(Long userId) {
-        throw new UnsupportedOperationException("Not implemented yet");
+
+
+        return userRepository.findById(userId)
+                .map(User::email).or(() -> emailRepository.getUserEmail(userId))
+                .filter(email -> ! email.isBlank()).orElse(fallbackUserEmail);
     }
 
     public Optional<User> getUserById(Long id) {
