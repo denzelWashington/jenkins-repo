@@ -17,7 +17,7 @@ pipeline {
 
         stage('Build') {
                     steps {
-                        echo 'Packaging de lapplication'
+                        echo 'Packaging de lapplication ok'
                         sh 'mvn package -DskipTests'
                     }
                 }
